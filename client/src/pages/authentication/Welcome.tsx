@@ -1,36 +1,64 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: ''
-  });
+const Welcome = () => {
   const navigate = useNavigate();
+  // ...existing code...
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    try {
+      const res = await fetch('/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        data = { success: false, message: 'Invalid server response' };
+      }
+      if (res.ok && data.success) {
+        navigate('/dashboard');
+      } else {
+        console.error(data.message || 'Login failed');
+      }
+    } catch (err) {
+      console.error('Network error:', err);
+    }
   };
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Simple redirect without authentication
-    console.log('Login form submitted:', formData);
-    navigate('/dashboard');
-  };
+  const handleRegister = async (event) => {
+    event.preventDefault();
+    const name = event.target.name.value;
+    const email = event.target.email.value;
+    const password = event.target.password.value;
 
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Simple redirect without authentication
-    console.log('Register form submitted:', formData);
-    navigate('/dashboard');
+    try {
+      const res = await fetch('/register', {
+        method: 'POST',
+        body: JSON.stringify({ name, email, password }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        data = { success: false, message: 'Invalid server response' };
+      }
+      if (res.ok && data.success) {
+        navigate('/dashboard');
+      } else {
+        console.error(data.message || 'Registration failed');
+      }
+    } catch (err) {
+      console.error('Network error:', err);
+    }
   };
+// ...existing code...}
 
   return (
     <div className="w-screen h-screen bg-gradient-to-bl from-zinc-400 via-zinc-600 to-zinc-800 p-5 flex justify-center items-center">
@@ -47,16 +75,23 @@ const Login = () => {
               <div className="flip-card__inner">
                 <div className="flip-card__front">
                   <div className="title">Log in</div>
-                  <form className="flip-card__form" onSubmit={handleLogin}>
+                  <form className="flip-card__form" onSubmit={handleSubmit} >
                     <input 
                       className="flip-card__input" 
                       name="email" 
                       placeholder="Email" 
                       type="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
                       required
                     />
+                    <input 
+                      className="flip-card__input" 
+                      name="password"
+                      placeholder="Password"
+                      type="password"
+                    
+                      required
+                    />
+                    
                     <button 
                       className="flip-card__btn" 
                       type="submit"
@@ -73,8 +108,7 @@ const Login = () => {
                       name="name"
                       placeholder="Name" 
                       type="text"
-                      value={formData.name}
-                      onChange={handleInputChange}
+                     
                       required
                     />
                     <input 
@@ -82,10 +116,17 @@ const Login = () => {
                       name="email" 
                       placeholder="Email" 
                       type="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
+                     
                       required
                     />
+                    <input 
+                      className="flip-card__input" 
+                      name="password"
+                      placeholder="Password"
+                      type="password"
+                      required
+                    />
+                    
                     <button 
                       className="flip-card__btn"
                       type="submit"
@@ -134,7 +175,7 @@ const StyledWrapper = styled.div`
     top: 0;
     width: 100px;
     text-decoration: underline;
-    color: var(--font-color);
+    color: white;
     font-weight: 600;
   }
 
@@ -145,7 +186,7 @@ const StyledWrapper = styled.div`
     top: 0;
     width: 100px;
     text-decoration: none;
-    color: var(--font-color);
+    color: white;
     font-weight: 600;
   }
 
@@ -248,6 +289,7 @@ const StyledWrapper = styled.div`
   }
 
   .title {
+  
     margin: 20px 0 20px 0;
     font-size: 25px;
     font-weight: 900;
@@ -309,4 +351,4 @@ const StyledWrapper = styled.div`
   }
 `;
 
-export default Login;
+export default Welcome;
