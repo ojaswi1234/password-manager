@@ -4,10 +4,11 @@ const session = require('express-session');
 
 const connectDB = require('./db');
 const User = require('./models/User');
+const Accounts = require('./models/Accounts');
 const app = express();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const { hash } = require('crypto');
+
 
 
 // Connect to MongoDB
@@ -47,7 +48,7 @@ function isLoggedIn(req, res, next) {
 app.get('/dashboard', isLoggedIn, (req, res) => {
     // User is authenticated if this handler is reached
     res.send("Welcome to your dashboard!");
-    res.redirect("/dashboard");
+   
 });
 
 
@@ -101,6 +102,27 @@ app.post('/register', async (req, res) => {
     }
 });
 
+app.post('/saved', async (req, res) => {
+    const { platform, email, password } = req.body;
+
+    try{
+
+        const hashedPassword = await bcrypt.hash(password, 20);
+
+        const account = await Accounts.create({
+            platform,
+            email,
+            password: hashedPassword
+        });
+    res.status(201).json({ success: true, message: "Credentials saved successfully" });
+
+    }
+    catch(err){
+        console.error("Error saving credentials:", err);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+});
+
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
@@ -127,6 +149,8 @@ app.post('/login', async (req, res) => {
         res.status(500).json({ success: false, message: "Server error" });
     }
 });
+
+
 
 app.get('/:profile', isLoggedIn, (req, res) => {
     res.json({ name: `${req.params.profile}` });

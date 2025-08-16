@@ -12,6 +12,29 @@ const DashBoard = () => {
     try { Modal.setAppElement('#root'); } catch { /* ignore in tests/env without DOM */ }
   }, []);
 
+
+  const handleSave = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+    fetch('/saved', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          // Handle successful save
+          setIsModalOpen(false);
+        } else {
+          // Handle error
+        }
+      });
+  }
+
   return (
     <>
     <ThemeProvider>
@@ -41,24 +64,24 @@ const DashBoard = () => {
             <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">Add your Credentials for respective platforms</p>
             <div className="mt-4">
               {/* Simple form or content goes here */}
-              <form className="space-y-4 flex flex-col " >
-              <select className="w-full p-2 border rounded bg-white dark:bg-zinc-700 mb-4">
-                <option value="">Select a platform</option>
-                <option value="option1">🔍 Google</option>
-                <option value="option2">🪟 Microsoft</option>
-                <option value="option3">🚚 Amazon</option>
-                <option value="option4">📸 Instagram</option>
-                <option value="option5">💼 LinkedIn</option>
-                <option value="option6">🧠 FaceBook</option>
-                <option value="option7">  𝕏 X</option>
-                <option value="option8">✳️ Other</option>
-              </select>
-              <input className="w-full p-2 border rounded bg-white dark:bg-zinc-700 mb-4" placeholder="Enter your UserName/Email..." />
-              <input className="w-full p-2 border rounded bg-white dark:bg-zinc-700 mb-4" type="password" placeholder="Enter your Password..." />
-               <div className="mt-4 flex justify-end gap-2">
-              <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-gray-200 dark:bg-zinc-600 rounded cursor-pointer">Cancel</button>
-              <button type="submit" onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-blue-600 text-white rounded cursor-pointer">ADD +</button>
-            </div>
+              <form className="space-y-4 flex flex-col " onSubmit={handleSave} method="POST">
+                <select name="platform" className="w-full p-2 border rounded bg-white dark:bg-zinc-700 mb-4" required>
+                  <option value="">Select a platform</option>
+                  <option value="google">🔍 Google</option>
+                  <option value="microsoft">🪟 Microsoft</option>
+                  <option value="amazon">🚚 Amazon</option>
+                  <option value="instagram">📸 Instagram</option>
+                  <option value="linkedin">💼 LinkedIn</option>
+                  <option value="facebook">🧠 Facebook</option>
+                  <option value="x">𝕏 X</option>
+                  <option value="other">✳️ Other</option>
+                </select>
+                <input name="email" className="w-full p-2 border rounded bg-white dark:bg-zinc-700 mb-4" placeholder="Enter your UserName/Email..." required />
+                <input name="password" className="w-full p-2 border rounded bg-white dark:bg-zinc-700 mb-4" type="password" placeholder="Enter your Password..." required />
+                <div className="mt-4 flex justify-end gap-2">
+                  <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-gray-200 dark:bg-zinc-600 rounded cursor-pointer">Cancel</button>
+                  <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded cursor-pointer flex-1 justify-between items-center hover:bg-blue-700">ADD <span className="font-bold scale-150">+</span></button>
+                </div>
               </form>
             </div>
            

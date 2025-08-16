@@ -82,13 +82,14 @@ const Welcome = () => {
                       placeholder="Email" 
                       type="email"
                       required
+                      autoComplete="off"
                     />
                     <input 
                       className="flip-card__input" 
                       name="password"
                       placeholder="Password"
                       type="password"
-                    
+                     autoComplete="off"
                       required
                     />
                     
@@ -108,7 +109,7 @@ const Welcome = () => {
                       name="name"
                       placeholder="Name" 
                       type="text"
-                     
+                      autoComplete="off"
                       required
                     />
                     <input 
@@ -116,7 +117,7 @@ const Welcome = () => {
                       name="email" 
                       placeholder="Email" 
                       type="email"
-                     
+                      autoComplete="off"
                       required
                     />
                     <input 
@@ -124,6 +125,7 @@ const Welcome = () => {
                       name="password"
                       placeholder="Password"
                       type="password"
+                       autoComplete="off"
                       required
                     />
                     

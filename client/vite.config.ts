@@ -18,6 +18,7 @@ export default defineConfig({
       '/logout': 'http://localhost:3000',
       '/dashboard': 'http://localhost:3000',
       '/:profile': 'http://localhost:3000',
+      '/saved': 'http://localhost:3000'
     }
   }
 })
