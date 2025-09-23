@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import NavBar from "../../components/NavBar";
 import { ThemeProvider } from "../../components/theme-provider";
@@ -11,7 +10,6 @@ const DashBoard = () => {
     // Set the app element for accessibility (adjust selector if your root id is different)
     try { Modal.setAppElement('#root'); } catch { /* ignore in tests/env without DOM */ }
   }, []);
-
 
   const handleSave = (e) => {
     e.preventDefault();
@@ -37,60 +35,70 @@ const DashBoard = () => {
 
   return (
     <>
-    <ThemeProvider>
-    <main className="w-screen min-h-screen bg-white dark:bg-zinc-900 ">
-      <NavBar />
-     
-     <div className="w-full p-4 ">
-        <h1 className="text-2xl font-semibold text-center text-black dark:text-white">Dashboard</h1>
-        <p className="text-center text-gray-600 dark:text-gray-400 mt-2">Manage your passwords and settings here.</p>
-      </div>
-      <div className="container min-h-[400px] mx-auto p-4 bg-zinc-100 dark:bg-zinc-800 rounded-lg shadow-md grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
-        {/* Additional dashboard content can go here */}
-  <button id="dialogBtn" onClick={() => setIsModalOpen(true)} className="max-w-64 max-h-72 bg-white/40 dark:bg-zinc-500 p-4 rounded-lg shadow-lg flex justify-center items-center hover:bg-white/60 dark:hover:bg-zinc-600 transition-colors hover:z-30 cursor-pointer">
-        <svg aria-hidden="true" data-prefix="far" data-icon="plus-octagon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="svg-inline--fa fa-plus-octagon fa-w-16 fa-7x size-1/3"><path fill="currentColor" d="M497.9 150.5L361.5 14.1c-9-9-21.2-14.1-33.9-14.1H184.5c-12.7 0-24.9 5.1-33.9 14.1L14.1 150.5c-9 9-14.1 21.2-14.1 33.9v143.1c0 12.7 5.1 24.9 14.1 33.9l136.5 136.5c9 9 21.2 14.1 33.9 14.1h143.1c12.7 0 24.9-5.1 33.9-14.1L498 361.4c9-9 14.1-21.2 14.1-33.9v-143c-.1-12.8-5.2-25-14.2-34zm-33.9 177L327.5 464h-143L48 327.5v-143L184.5 48h143.1L464 184.5v143zM384 240v32c0 6.6-5.4 12-12 12h-88v88c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-88h-88c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h88v-88c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v88h88c6.6 0 12 5.4 12 12z" className=""></path></svg>
-        </button>
-        
-        <Modal
-          isOpen={isModalOpen}
-          onRequestClose={() => setIsModalOpen(false)}
-          shouldCloseOnOverlayClick={true}
-          overlayClassName="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-          className="bg-white dark:bg-zinc-800 rounded-lg p-14 max-w-md mx-4 outline-none"
-          contentLabel="Create item"
-        >
-          <div>
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Add Credentials</h2>
-            <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">Add your Credentials for respective platforms</p>
-            <div className="mt-4">
-              {/* Simple form or content goes here */}
-              <form className="space-y-4 flex flex-col " onSubmit={handleSave} method="POST">
-                <select name="platform" className="w-full p-2 border rounded bg-white dark:bg-zinc-700 mb-4" required>
-                  <option value="">Select a platform</option>
-                  <option value="google">🔍 Google</option>
-                  <option value="microsoft">🪟 Microsoft</option>
-                  <option value="amazon">🚚 Amazon</option>
-                  <option value="instagram">📸 Instagram</option>
-                  <option value="linkedin">💼 LinkedIn</option>
-                  <option value="facebook">🧠 Facebook</option>
-                  <option value="x">𝕏 X</option>
-                  <option value="other">✳️ Other</option>
-                </select>
-                <input name="email" className="w-full p-2 border rounded bg-white dark:bg-zinc-700 mb-4" placeholder="Enter your UserName/Email..." required />
-                <input name="password" className="w-full p-2 border rounded bg-white dark:bg-zinc-700 mb-4" type="password" placeholder="Enter your Password..." required />
-                <div className="mt-4 flex justify-end gap-2">
-                  <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-gray-200 dark:bg-zinc-600 rounded cursor-pointer">Cancel</button>
-                  <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded cursor-pointer flex-1 justify-between items-center hover:bg-blue-700">ADD <span className="font-bold scale-150">+</span></button>
-                </div>
-              </form>
-            </div>
-           
+      <ThemeProvider>
+        <main className="w-screen min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-zinc-900 dark:to-zinc-800">
+          <NavBar />
+
+          <div className="w-full p-6">
+            <h1 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-2">Dashboard</h1>
+            <p className="text-center text-gray-600 dark:text-gray-400 text-lg">Manage your passwords and settings here.</p>
           </div>
-        </Modal>
-     
-     </div>
-    </main>
-    </ThemeProvider>
+
+          <div className="w-full mt-8 p-6 flex flex-col ">
+            <button
+                id="dialogBtn"
+                onClick={() => setIsModalOpen(true)}
+                className="w-fit p-3 bg-black dark:bg-white rounded-2xl  mb-6 flex justify-center items-center place-self-center-safe lg:place-self-end-safe cursor-pointer hover:scale-105 transition-transform lg:mr-24"
+              >
+               
+                <span className="text-white dark:text-black font-bold">+ Add Credential</span>
+              </button>
+           
+             
+                       
+              
+
+              <Modal
+                isOpen={isModalOpen}
+                onRequestClose={() => setIsModalOpen(false)}
+                shouldCloseOnOverlayClick={true}
+                overlayClassName="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50"
+                className="bg-white/95 dark:bg-zinc-800/95 backdrop-blur-md rounded-2xl p-8 max-w-md mx-4 outline-none shadow-2xl"
+                contentLabel="Create item"
+              >
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">Add Credentials</h2>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-6">Add your credentials for respective platforms</p>
+                  <form className="space-y-6 flex flex-col" onSubmit={handleSave} method="POST">
+                    <select name="platform" className="w-full p-3 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                      <option value="">Select a platform</option>
+                      <option value="google" className="font-bold"> Google</option>
+                      <option value="microsoft" className="font-bold">Microsoft</option>
+                      <option value="amazon" className="font-bold">Amazon</option>
+                      <option value="instagram" className="font-bold"> Instagram</option>
+                      <option value="linkedin" className="font-bold"> LinkedIn</option>
+                      <option value="facebook" className="font-bold"> Facebook</option>
+                      <option value="x" className="font-bold">𝕏</option>
+                      <option value="other" className="font-bold">Other</option>
+                    </select>
+                    <input name="email" className="w-full p-3 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter your Username/Email..." required />
+                    <input name="password" className="w-full p-3 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent" type="password" placeholder="Enter your Password..." required />
+                    <div className="mt-6 flex justify-end gap-3">
+                      <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-gray-200 dark:bg-zinc-600 hover:bg-gray-300 dark:hover:bg-zinc-500 rounded-lg cursor-pointer transition-colors">Cancel</button>
+                      <button type="submit" className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg cursor-pointer flex-1 flex justify-center items-center transition-colors">
+                        ADD <span className="font-bold ml-2">+</span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </Modal>
+              <div className="container min-h-fit mx-auto p-8 bg-white/70 dark:bg-zinc-800/70 backdrop-blur-md rounded-2xl shadow-xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              
+
+            </div>
+          </div>
+        </main>
+      </ThemeProvider>
     </>
   )
 }
