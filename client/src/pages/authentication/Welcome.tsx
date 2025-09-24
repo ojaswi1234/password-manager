@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
+const API_BASE = import.meta.env.VITE_API_BASE || '';
+
 const Welcome = () => {
   const navigate = useNavigate();
   // ...existing code...
@@ -10,8 +12,9 @@ const Welcome = () => {
     const password = event.target.password.value;
 
     try {
-      const res = await fetch('/login', {
+      const res = await fetch(`${API_BASE}/login`, {
         method: 'POST',
+        credentials: 'include',
         body: JSON.stringify({ email, password }),
         headers: { 'Content-Type': 'application/json' }
       });
@@ -38,8 +41,9 @@ const Welcome = () => {
     const password = event.target.password.value;
 
     try {
-      const res = await fetch('/register', {
+      const res = await fetch(`${API_BASE}/register`, {
         method: 'POST',
+        credentials: 'include',
         body: JSON.stringify({ name, email, password }),
         headers: { 'Content-Type': 'application/json' }
       });
