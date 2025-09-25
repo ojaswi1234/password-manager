@@ -1,4 +1,4 @@
-import React from 'react'
+
 
 const Card = (props : { src:string,  name:string, }) => {
   return (

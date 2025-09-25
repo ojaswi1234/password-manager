@@ -1,16 +1,29 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const API_BASE = import.meta.env.VITE_API_BASE || '';
 
 const Welcome = () => {
   const navigate = useNavigate();
-  // ...existing code...
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const email = event.target.email.value;
-    const password = event.target.password.value;
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [registerLoading, setRegisterLoading] = useState(false);
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const [registerError, setRegisterError] = useState<string | null>(null);
 
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault();
+    if (loginLoading) return;
+    setLoginError(null);
+    setLoginLoading(true);
+    const formData = new FormData(event.currentTarget);
+    const email = String(formData.get('email') || '').trim();
+    const password = String(formData.get('password') || '');
+    if (!email || !password) {
+      setLoginError('Email and password are required');
+      setLoginLoading(false);
+      return;
+    }
     try {
       const res = await fetch(`${API_BASE}/login`, {
         method: 'POST',
@@ -18,28 +31,34 @@ const Welcome = () => {
         body: JSON.stringify({ email, password }),
         headers: { 'Content-Type': 'application/json' }
       });
-      let data;
-      try {
-        data = await res.json();
-      } catch {
-        data = { success: false, message: 'Invalid server response' };
-      }
+  let data: { success: boolean; message?: string };
+  try { data = await res.json(); } catch { data = { success: false, message: 'Invalid server response' }; }
       if (res.ok && data.success) {
         navigate('/dashboard');
       } else {
-        console.error(data.message || 'Login failed');
+        setLoginError(data.message || 'Login failed');
       }
-    } catch (err) {
-      console.error('Network error:', err);
+    } catch {
+      setLoginError('Network error');
+    } finally {
+      setLoginLoading(false);
     }
   };
 
-  const handleRegister = async (event) => {
+  const handleRegister: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
-    const name = event.target.name.value;
-    const email = event.target.email.value;
-    const password = event.target.password.value;
-
+    if (registerLoading) return;
+    setRegisterError(null);
+    setRegisterLoading(true);
+    const formData = new FormData(event.currentTarget);
+    const name = String(formData.get('name') || '').trim();
+    const email = String(formData.get('email') || '').trim();
+    const password = String(formData.get('password') || '');
+    if (!name || !email || !password) {
+      setRegisterError('All fields are required');
+      setRegisterLoading(false);
+      return;
+    }
     try {
       const res = await fetch(`${API_BASE}/register`, {
         method: 'POST',
@@ -47,19 +66,17 @@ const Welcome = () => {
         body: JSON.stringify({ name, email, password }),
         headers: { 'Content-Type': 'application/json' }
       });
-      let data;
-      try {
-        data = await res.json();
-      } catch {
-        data = { success: false, message: 'Invalid server response' };
-      }
+  let data: { success: boolean; message?: string };
+  try { data = await res.json(); } catch { data = { success: false, message: 'Invalid server response' }; }
       if (res.ok && data.success) {
         navigate('/dashboard');
       } else {
-        console.error(data.message || 'Registration failed');
+        setRegisterError(data.message || 'Registration failed');
       }
-    } catch (err) {
-      console.error('Network error:', err);
+    } catch {
+      setRegisterError('Network error');
+    } finally {
+      setRegisterLoading(false);
     }
   };
 // ...existing code...}
@@ -97,11 +114,13 @@ const Welcome = () => {
                       required
                     />
                     
-                    <button 
-                      className="flip-card__btn" 
+                    {loginError && <p className="text-red-500 text-xs mt-1">{loginError}</p>}
+                    <button
+                      className="flip-card__btn"
                       type="submit"
+                      disabled={loginLoading}
                     >
-                      Let's go!
+                      {loginLoading ? 'Logging in...' : "Let's go!"}
                     </button>
                   </form>
                 </div>
@@ -133,11 +152,13 @@ const Welcome = () => {
                       required
                     />
                     
-                    <button 
+                    {registerError && <p className="text-red-500 text-xs mt-1">{registerError}</p>}
+                    <button
                       className="flip-card__btn"
                       type="submit"
+                      disabled={registerLoading}
                     >
-                      Confirm!
+                      {registerLoading ? 'Signing up...' : 'Confirm!'}
                     </button>
                   </form>
                 </div>
