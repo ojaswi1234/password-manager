@@ -3,6 +3,8 @@ import NavBar from "../../components/NavBar";
 import { ThemeProvider } from "../../components/theme-provider";
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
+import { FaHeartbeat, FaKey, FaUserSecret } from 'react-icons/fa';
+import { MdOutlineVpnKey } from 'react-icons/md';
 
 const API_BASE = import.meta.env.VITE_API_BASE || '';
 
@@ -178,14 +180,29 @@ const DashBoard = () => {
   return (
     <>
       <ThemeProvider>
-        <main className="w-screen min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-zinc-900 dark:to-zinc-800">
+        <main className="w-screen min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-red-900 dark:to-yellow-800 scroll-hide">
           <NavBar />
           <div className="w-full p-6">
             <h1 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-2">Dashboard</h1>
             <p className="text-center text-gray-600 dark:text-gray-400 text-lg">Manage your passwords and settings here.</p>
-            {error && <p className="text-center text-red-500">{error}</p>}
+            
           </div>
+         
+            <div className="w-screen h-64 bg-gray-100 dark:bg-zinc-500/7 flex flex-col justify-center items-center backdrop-blur-lg">
+
+              <div className="h-fit w-fit flex flex-row gap-12 justify-self-center place-self-center p-2 text-center text-white dark:text-black font-bold ">       
+              <div onClick={()=>alert("Wait for this feature.....")} className="w-52 h-44 bg-black  dark:bg-white rounded-2xl flex justify-center items-center transition duration-300 hover:scale-105 cursor-pointer"><section className="flex flex-col w-full h-full justify-center items-center gap-2"><FaHeartbeat className='size-14'/> <h2>Password Health Dashboard</h2></section></div>
+              <div onClick={()=>alert("Wait for this feature.....")} className="w-52 h-44 bg-black dark:bg-white rounded-2xl flex justify-center items-center transition duration-300 hover:scale-105 cursor-pointer"><section className="flex flex-col w-full h-full justify-center items-center gap-2"><FaKey className='size-14'/> <h2>Emergency Access</h2></section></div>
+              <div onClick={()=>alert("Wait for this feature.....")} className="w-52 h-44 bg-black dark:bg-white rounded-2xl flex justify-center items-center transition duration-300 hover:scale-105 cursor-pointer"><section className="flex flex-col w-full h-full justify-center items-center gap-2"><MdOutlineVpnKey className='size-14'/> <h2>Download BackUp Codes</h2></section></div>
+              <div onClick={()=>alert("Wait for this feature.....")} className="w-52 h-44 bg-black dark:bg-white rounded-2xl flex justify-center items-center transition duration-300 hover:scale-105 cursor-pointer"><section className="flex flex-col w-full h-full justify-center items-center gap-2"><FaUserSecret className='size-14'/> <h2>Developer Security</h2></section></div>
+              </div>
+              
+            </div>
+
+            
+          
           <div className="w-full mt-8 p-6 flex flex-col">
+            <h1 className=" h-fit w-fit text-center font-bold text-xl flex place-self-center mt-4 translate-y-8 hidden lg:block">Your Credentials</h1>
             <button
               id="dialogBtn"
               onClick={() => setIsModalOpen(true)}

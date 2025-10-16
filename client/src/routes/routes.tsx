@@ -13,6 +13,7 @@ function AppRoutes() {
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/Welcome" element={<Welcome />} />
         <Route path='/profile' element={<Profile />} />
+        
       </Routes>
     </BrowserRouter>
   );

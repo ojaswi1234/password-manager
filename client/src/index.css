@@ -118,3 +118,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+.scroll-hide{
+  scrollbar-width: thin;
+
+}
