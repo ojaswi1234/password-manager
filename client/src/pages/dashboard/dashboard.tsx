@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import NavBar from "../../components/NavBar";
 import { ThemeProvider } from "../../components/theme-provider";
 import Modal from 'react-modal';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { FaHeartbeat, FaKey, FaUserSecret } from 'react-icons/fa';
 import { MdOutlineVpnKey } from 'react-icons/md';
 
@@ -191,7 +191,7 @@ const DashBoard = () => {
             <div className="w-screen h-64 bg-gray-100 dark:bg-zinc-500/7 flex flex-col justify-center items-center backdrop-blur-lg">
 
               <div className="h-fit w-fit flex flex-row gap-12 justify-self-center place-self-center p-2 text-center text-white dark:text-black font-bold ">       
-              <div onClick={()=>alert("Wait for this feature.....")} className="w-52 h-44 bg-black  dark:bg-white rounded-2xl flex justify-center items-center transition duration-300 hover:scale-105 cursor-pointer"><section className="flex flex-col w-full h-full justify-center items-center gap-2"><FaHeartbeat className='size-14'/> <h2>Password Health Dashboard</h2></section></div>
+              <div onClick={()=>{ navigate('/healthboard');}} className="w-52 h-44 bg-black  dark:bg-white rounded-2xl flex justify-center items-center transition duration-300 hover:scale-105 cursor-pointer"><section className="flex flex-col w-full h-full justify-center items-center gap-2"><FaHeartbeat className='size-14'/> <h2>Password Health Dashboard</h2></section></div>
               <div onClick={()=>alert("Wait for this feature.....")} className="w-52 h-44 bg-black dark:bg-white rounded-2xl flex justify-center items-center transition duration-300 hover:scale-105 cursor-pointer"><section className="flex flex-col w-full h-full justify-center items-center gap-2"><FaKey className='size-14'/> <h2>Emergency Access</h2></section></div>
               <div onClick={()=>alert("Wait for this feature.....")} className="w-52 h-44 bg-black dark:bg-white rounded-2xl flex justify-center items-center transition duration-300 hover:scale-105 cursor-pointer"><section className="flex flex-col w-full h-full justify-center items-center gap-2"><MdOutlineVpnKey className='size-14'/> <h2>Download BackUp Codes</h2></section></div>
               <div onClick={()=>alert("Wait for this feature.....")} className="w-52 h-44 bg-black dark:bg-white rounded-2xl flex justify-center items-center transition duration-300 hover:scale-105 cursor-pointer"><section className="flex flex-col w-full h-full justify-center items-center gap-2"><FaUserSecret className='size-14'/> <h2>Developer Security</h2></section></div>

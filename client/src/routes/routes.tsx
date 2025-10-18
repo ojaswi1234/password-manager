@@ -5,6 +5,7 @@ import DashBoard  from "../pages/dashboard/dashboard";
 
 import Profile from "../pages/Profile/Profile";
 import Welcome from "../pages/authentication/Welcome";
+import PassHealth from "../pages/dashboard/features/passHealth";
 function AppRoutes() {
   return (
     <BrowserRouter>
@@ -13,7 +14,7 @@ function AppRoutes() {
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/Welcome" element={<Welcome />} />
         <Route path='/profile' element={<Profile />} />
-        
+        <Route path="/healthboard" element={<PassHealth />} />
       </Routes>
     </BrowserRouter>
   );

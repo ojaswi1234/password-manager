@@ -1,10 +1,11 @@
 
-
-import { BackgroundBeams } from '../../components/background-beams'
+import { BackgroundBeams } from '../../components/background-beams';
 
 
 const home = () => {
   
+
+ 
   return (
     <div className="w-screen h-screen bg-gradient-to-bl from-[#fdbb2d] via-[#b21f1f] to-[#1a2a6c] p-2 ">
         <div className="w-full h-full bg-zinc-900 mx-auto rounded-2xl">
@@ -26,6 +27,9 @@ const home = () => {
               >
                 Get Started
               </a>
+            </div>
+            <div className="w-full bg-zinc-200 mx-auto ">
+              a
             </div>
         </div>
             
